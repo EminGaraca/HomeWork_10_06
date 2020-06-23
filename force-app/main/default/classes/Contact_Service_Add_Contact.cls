@@ -1,6 +1,6 @@
 public with sharing class Contact_Service_Add_Contact {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static String createContactByName(String fName, String lName) {
         Contact con = new Contact(FirstName = fName, LastName = lName );
         insert con;

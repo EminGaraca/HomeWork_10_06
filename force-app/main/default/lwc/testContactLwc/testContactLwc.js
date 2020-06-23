@@ -6,23 +6,29 @@ export default class TestContactLwc extends LightningElement {
     @api fName;
     @api lName;
 
-    askForName() {
+    askForName(e) {
         this.fName = prompt('What is your first  name ?');
         this.lName = prompt('What is your  last name ?');
-        
-    }
-    @wire(createContactByName,{fName :'$fName', lName : '$lName'})
-    
-    contacts;
-
-    handleSuccess (event) {
-        const toastEvent = new ShowToastEvent({
-            title: "Contact created",
-            message: "Record ID: " + event.detail.id,
-            variant: "success"
+        createContactByName({
+          
+            fName: this.fName,
+            lName: this.lName
+        })
+        .then(() => {
+            const toastEvent = new ShowToastEvent({
+                title: "Contact created",
+                message: "Record created: ",
+                variant: "success"
+            });
+            this.dispatchEvent(toastEvent);
+        })
+        .catch((error) => {
+            this.message = 'Error received: code' + error.errorCode + ', ' +
+                'message ' + error.body.message;
         });
-        this.dispatchEvent(toastEvent);
     }
+
+    
 
     
 
