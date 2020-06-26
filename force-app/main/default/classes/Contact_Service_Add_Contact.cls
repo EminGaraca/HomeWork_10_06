@@ -5,6 +5,7 @@ public with sharing class Contact_Service_Add_Contact {
         Contact con = new Contact(FirstName = fName, LastName = lName );
         insert con;
         ID conId = con.Id;
-        return conId;
+        String identification = String.valueOf(conId);
+        return String.valueOf(conId);
     }
 }
